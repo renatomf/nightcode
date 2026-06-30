@@ -47,14 +47,6 @@ export function InputBar({ onSubmit, disabled = false }: Props) {
     setSelectedIndex,
   } = useCommandMenu();
 
-   const handleCommandExecute = useCallback(
-    (index: number) => {
-      const command = resolveCommand(index);
-      handleCommand(command);
-    },
-    [],
-  );
-
   const handleTextareaContentChange = useCallback(() => {
     const textarea = textareaRef.current;
     if (!textarea) return;
@@ -75,26 +67,35 @@ export function InputBar({ onSubmit, disabled = false }: Props) {
 
     onSubmit(text);
     textarea.setText("");
-  }, [disabled, onSubmit])
+  }, [disabled, onSubmit]);
 
-  const handleCommand = useCallback((
-    command: Command | undefined
-  ) => {
-    const textarea = textareaRef.current;
-    if (!textarea || !command) return;
+  const handleCommand = useCallback(
+    (command: Command | undefined) => {
+      const textarea = textareaRef.current;
+      if (!textarea || !command) return;
 
-    textarea.setText("");
+      textarea.setText("");
 
-    if (command.action) {
-      command.action({
-        exit: () => renderer.destroy(),
-      });
-    } else {
-      textarea.insertText(command.value + " ");
-    }
-  }, [renderer]);
+      if (command.action) {
+        command.action({
+          exit: () => renderer.destroy(),
+        });
+      } else {
+        textarea.insertText(command.value + " ");
+      }
+    },
+    [renderer],
+  );
 
-    // Wire up textarea submit handler once so it always reads the latest state.
+  const handleCommandExecute = useCallback(
+    (index: number) => {
+      const command = resolveCommand(index);
+      handleCommand(command);
+    },
+    [resolveCommand, handleCommand],
+  );
+
+  // Wire up textarea submit handler once so it always reads the latest state.
   useEffect(() => {
     const textarea = textareaRef.current;
     if (!textarea) return;
@@ -121,7 +122,7 @@ export function InputBar({ onSubmit, disabled = false }: Props) {
       <box
         border={["left"]}
         borderColor="cyan"
-         customBorderChars={{
+        customBorderChars={{
           ...EmptyBorder,
           vertical: "┃",
           bottomLeft: "╹",
@@ -143,7 +144,7 @@ export function InputBar({ onSubmit, disabled = false }: Props) {
               bottom="100%"
               left={0}
               width="100%"
-              backgroundColor="#1A1A24" 
+              backgroundColor="#1A1A24"
               zIndex={10}
             >
               <CommandMenu
@@ -156,7 +157,7 @@ export function InputBar({ onSubmit, disabled = false }: Props) {
             </box>
           )}
           <textarea
-            ref={textareaRef}  
+            ref={textareaRef}
             focused={!disabled}
             keyBindings={TEXTAREA_KEY_BINDINGS}
             onContentChange={handleTextareaContentChange}
@@ -167,4 +168,4 @@ export function InputBar({ onSubmit, disabled = false }: Props) {
       </box>
     </box>
   );
-};
+}
