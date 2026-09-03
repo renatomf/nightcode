@@ -1,9 +1,10 @@
-# Nightcode
+NightCode
+A terminal-based AI coding agent.
 
-> Editor de código / IDE assistido por IA no navegador — construído com foco em produtividade, edição em tempo real e um agente de IA integrado ao fluxo de desenvolvimento.
+Plan, chat, and build inside your local project with a Bun-powered CLI, Hono API, Prisma ORM, Clerk auth, and AI SDK streaming.
 
-![Status](https://img.shields.io/badge/status-em%20desenvolvimento-yellow)
-![License](https://img.shields.io/badge/license-unspecified-lightgrey)
+
+Bun  OpenTUI  React  Hono  Neon  Clerk  Polar  CodeRabbit  Sentry  Railway
 
 ## Sobre o projeto
 
