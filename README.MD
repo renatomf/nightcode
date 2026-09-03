@@ -82,36 +82,6 @@ nightcode/
 └── README.md
 ```
 
-## Pré-requisitos
-
-- Node.js (versão a confirmar)
-- Gerenciador de pacotes: `npm`, `yarn`, `pnpm` ou `bun`
-- Contas/chaves de API necessárias (a confirmar conforme integrações do projeto)
-
-## Variáveis de ambiente
-
-```bash
-# Preencher com as variáveis reais usadas pelo projeto
-```
-
-## Instalação e execução local
-
-```bash
-# 1. Clone o repositório
-git clone https://github.com/renatomf/nightcode.git
-cd nightcode
-
-# 2. Instale as dependências
-npm install
-
-# 3. Configure o .env.local (veja seção acima)
-
-# 4. Rode o servidor de desenvolvimento
-npm run dev
-```
-
-Abra [http://localhost:3000](http://localhost:3000) no navegador.
-
 ## Scripts disponíveis
 
 | Comando | Descrição |
@@ -128,15 +98,3 @@ Abra [http://localhost:3000](http://localhost:3000) no navegador.
 - [ ] Documentar o fluxo do agente de IA
 - [ ] Adicionar testes automatizados
 - [ ] Definir licença do projeto
-
-## Contribuindo
-
-1. Faça um fork do projeto
-2. Crie uma branch para sua feature (`git checkout -b feature/nome-da-feature`)
-3. Commit suas mudanças (`git commit -m 'feat: minha nova feature'`)
-4. Push para a branch (`git push origin feature/nome-da-feature`)
-5. Abra um Pull Request
-
-## Autor
-
-Feito por [@renatomf](https://github.com/renatomf).
