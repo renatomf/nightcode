@@ -1,149 +1,141 @@
-NightCode
-A terminal-based AI coding agent.
+# Nightcode
 
-Plan, chat, and build inside your local project with a Bun-powered CLI, Hono API, Prisma ORM, Clerk auth, and AI SDK streaming.
+> Editor de código / IDE assistido por IA no navegador — construído com foco em produtividade, edição em tempo real e um agente de IA integrado ao fluxo de desenvolvimento.
 
+![Status](https://img.shields.io/badge/status-em%20desenvolvimento-yellow)
+![License](https://img.shields.io/badge/license-unspecified-lightgrey)
 
-Bun  OpenTUI  React  Hono  Neon  Clerk  Polar  CodeRabbit  Sentry  Railway
+## Sobre o projeto
 
-Features
-Terminal AI Chat - Run an AI coding assistant directly in your terminal with an OpenTUI and React interface
-Plan and Build Modes - Use read-only planning tools or enable write, edit, and shell execution tools for implementation
-Streaming Responses - Stream model output through the AI SDK with persisted session history
-Local Project Tools - Read files, list directories, glob, grep, write files, edit files, and run shell commands inside the current project
-Multi-Model Support - Use supported Anthropic and OpenAI chat models from a shared model registry
-Persistent Sessions - Store authenticated user sessions and messages in Postgres via Prisma
-Clerk OAuth - Authenticate the CLI through a browser-based Clerk OAuth flow
-Usage Billing - Meter AI usage as credits through Polar before allowing session and chat actions
-Getting Started
-Prerequisites
-Bun installed
-PostgreSQL database, such as Neon
-Clerk application configured for OAuth
-Anthropic and/or OpenAI API key
-Polar account and credits meter
-1. Clone and install
-git clone git@github.com:code-with-antonio/nightcode.git
+**Nightcode** é uma aplicação que reproduz a experiência de um editor/IDE de código moderno, com um agente de IA integrado para ajudar o desenvolvedor a escrever, revisar e entender código mais rápido. Este README foi construído seguindo o mesmo padrão usado no projeto irmão **[nextjs-polaris](https://github.com/renatomf/nextjs-polaris)**.
+
+> ⚠️ **Nota de transparência:** não consegui acessar automaticamente o conteúdo do repositório `renatomf/nightcode` (o GitHub retornou 404 para o meu acesso, mesmo com o repositório público). Por isso, esta versão do README é um **template estrutural** — a seção de arquitetura, stack e funcionalidades abaixo está com placeholders para você preencher com os dados reais (`package.json`, pastas do projeto, etc.). Assim que você colar essas informações aqui no chat, eu atualizo o arquivo com os detalhes exatos do seu projeto.
+
+## Principais funcionalidades
+
+- [ ] _Preencher: ex. editor de código com syntax highlighting_
+- [ ] _Preencher: ex. agente de IA para chat/geração de código_
+- [ ] _Preencher: ex. autenticação de usuários_
+- [ ] _Preencher: ex. persistência de projetos/arquivos_
+- [ ] _Preencher: ex. execução de código / preview em tempo real_
+
+## Tech Stack
+
+| Camada | Tecnologia |
+|---|---|
+| Framework | _preencher (ex. Next.js, Vite, etc.)_ |
+| UI | _preencher_ |
+| Editor de código | _preencher (ex. CodeMirror, Monaco)_ |
+| IA | _preencher (ex. AI SDK + provider)_ |
+| Backend / dados | _preencher_ |
+| Autenticação | _preencher_ |
+| Linguagem | _preencher_ |
+
+## Arquitetura
+
+```mermaid
+flowchart TB
+    User(["Usuário"])
+
+    subgraph Client["Frontend"]
+        UI["Interface / Editor de Código"]
+        Store["Estado da aplicação"]
+        UI --- Store
+    end
+
+    Auth[["Autenticação"]]
+    Backend[("Backend / Banco de dados")]
+    Jobs[["Processamento em background"]]
+    AI["Agente de IA"]
+    Monitor[["Monitoramento de erros"]]
+
+    User --> UI
+    UI -- login/sessão --> Auth
+    UI -- leitura/escrita de dados --> Backend
+    UI -- prompts do agente --> AI
+
+    Backend -- dispara eventos --> Jobs
+    Jobs -- executa tarefas --> AI
+
+    UI -.erros/traces.-> Monitor
+    Backend -.erros/traces.-> Monitor
+```
+
+**Como funciona o fluxo (placeholder — ajustar com a implementação real):**
+
+1. O usuário interage com a interface do editor no navegador.
+2. A camada de **autenticação** protege sessões e rotas.
+3. O **backend** persiste dados (arquivos, projetos, histórico) e sincroniza com o cliente.
+4. Tarefas mais pesadas ou assíncronas são delegadas a um **processador em background**.
+5. O **agente de IA** processa prompts do usuário e pode acionar ferramentas externas.
+6. Erros e métricas de todas as camadas são reportados a uma ferramenta de **monitoramento**.
+
+> Assim que você me passar o `package.json` e a estrutura de pastas reais do `nightcode`, eu troco esse diagrama genérico por um específico — com os nomes reais das tecnologias e as setas refletindo o fluxo de dados real do projeto.
+
+## Estrutura do projeto
+
+```
+nightcode/
+├── (preencher com as pastas reais do repositório)
+├── package.json
+└── README.md
+```
+
+## Pré-requisitos
+
+- Node.js (versão a confirmar)
+- Gerenciador de pacotes: `npm`, `yarn`, `pnpm` ou `bun`
+- Contas/chaves de API necessárias (a confirmar conforme integrações do projeto)
+
+## Variáveis de ambiente
+
+```bash
+# Preencher com as variáveis reais usadas pelo projeto
+```
+
+## Instalação e execução local
+
+```bash
+# 1. Clone o repositório
+git clone https://github.com/renatomf/nightcode.git
 cd nightcode
-bun install
-2. Configure environment
-cp .env.example .env
-Fill in the required values:
 
-API_URL=http://localhost:3000
-DATABASE_URL=
+# 2. Instale as dependências
+npm install
 
-ANTHROPIC_API_KEY=
-OPENAI_API_KEY=
+# 3. Configure o .env.local (veja seção acima)
 
-CLERK_FRONTEND_API=
-CLERK_OAUTH_CLIENT_SECRET=
-CLERK_OAUTH_CLIENT_ID=
-CLERK_PUBLISHABLE_KEY=
-CLERK_SECRET_KEY=
-JWT_SECRET=jwt-secret
+# 4. Rode o servidor de desenvolvimento
+npm run dev
+```
 
-POLAR_ACCESS_TOKEN=
-POLAR_PRODUCT_ID=
-POLAR_SERVER=sandbox
-POLAR_CREDITS_METER_ID=
-3. Set up Clerk OAuth
-NightCode authenticates the CLI through a browser-based Clerk OAuth flow. The CLI opens Clerk authorization in the browser, Clerk redirects to the server at /auth/callback, and the server forwards the authorization code back to the local CLI callback server.
+Abra [http://localhost:3000](http://localhost:3000) no navegador.
 
-In your Clerk dashboard:
+## Scripts disponíveis
 
-Go to Configure > Developers > OAuth applications.
-Click Add OAuth application.
-Name it anything, for example NightCode.
-Select these four scopes: openid, email, profile, and offline_access.
-Turn on Public. This is required for the Authorization Code with PKCE flow used by the CLI.
-Turn on Consent screen so users can approve the requested scopes.
-Add http://localhost:3000/auth/callback as a redirect URI for local development.
-Add your deployed callback URL as another redirect URI for production, for example https://your-deployment.com/auth/callback.
-You can keep both local and production redirect URIs on the same OAuth application.
+| Comando | Descrição |
+|---|---|
+| `npm run dev` | Inicia o servidor de desenvolvimento |
+| `npm run build` | Gera o build de produção |
+| `npm run start` | Inicia o servidor em modo produção |
+| `npm run lint` | Roda o linter no projeto |
 
-Copy the generated application credentials into .env:
+## Roadmap
 
-Environment variable	Clerk value
-CLERK_OAUTH_CLIENT_ID	OAuth application Client ID
-CLERK_OAUTH_CLIENT_SECRET	OAuth application Client Secret
-CLERK_FRONTEND_API	Clerk frontend API URL
-CLERK_PUBLISHABLE_KEY	Clerk publishable key
-CLERK_SECRET_KEY	Clerk secret key
-4. Set up Polar billing
-NightCode uses Polar credits to gate new work and bill completed AI usage. The server checks the user's active meter balance before creating sessions or sending chat requests, then ingests usage events after AI responses finish.
+- [ ] Preencher stack e dependências reais
+- [ ] Detalhar rotas/telas principais
+- [ ] Documentar o fluxo do agente de IA
+- [ ] Adicionar testes automatizados
+- [ ] Definir licença do projeto
 
-In your Polar dashboard, use sandbox mode for local development and create a meter with these exact settings:
+## Contribuindo
 
-Setting	Value
-Meter name	nightcode_credits
-Filter	Name equals nightcode_usage
-Aggregation	Sum
-Aggregation property	credits
-The event name and metadata key must match exactly. The server sends usage events like this:
+1. Faça um fork do projeto
+2. Crie uma branch para sua feature (`git checkout -b feature/nome-da-feature`)
+3. Commit suas mudanças (`git commit -m 'feat: minha nova feature'`)
+4. Push para a branch (`git push origin feature/nome-da-feature`)
+5. Abra um Pull Request
 
-{
-  name: "nightcode_usage",
-  metadata: { credits }
-}
-Next, create a meter credits benefit and attach it to a one-time purchase product:
+## Autor
 
-Create a benefit using the nightcode_credits meter.
-Set the credited units, for example 1000 credits.
-Create a one-time purchase product, for example $20 for 1000 credits.
-Attach the credits benefit to that product.
-Set the customer portal visibility to private so purchases happen through API-generated checkout links.
-Then copy the required Polar values into .env:
-
-Environment variable	Where to find it
-POLAR_ACCESS_TOKEN	Polar developer settings token
-POLAR_PRODUCT_ID	Product ID from the credits product
-POLAR_SERVER	Use sandbox locally, production for live billing
-POLAR_CREDITS_METER_ID	Meter ID from the meter URL
-The CLI upgrade flow calls /billing/checkout, which opens a Polar checkout URL. The usage flow calls /billing/portal, which opens the customer's Polar portal.
-
-5. Set up the database
-Generate the Prisma client:
-
-bun run --cwd packages/database db:generate
-Apply your Prisma schema to the configured Postgres database using your preferred Prisma workflow.
-
-6. Run the server
-bun run dev:server
-The API runs on http://localhost:3000.
-
-7. Run the CLI
-In another terminal:
-
-bun run dev:cli
-To build and link the local CLI binary:
-
-bun run link:cli
-nightcode
-Project Structure
-packages/
-├── cli/                         # OpenTUI + React terminal client
-│   ├── bin/                     # nightcode executable shim
-│   └── src/
-│       ├── components/          # Terminal UI components, dialogs, messages
-│       ├── hooks/               # Chat and UI hooks
-│       ├── layouts/             # Root terminal layouts
-│       ├── lib/                 # API client, auth, OAuth, local tool execution
-│       ├── providers/           # Dialog, keyboard, prompt, theme, toast providers
-│       └── screens/             # Home, new session, and session screens
-├── database/                    # Prisma schema, generated client, database exports
-├── server/                      # Hono API for auth, billing, sessions, and chat
-└── shared/                      # Shared schemas, tool contracts, and model registry
-Scripts
-Command	Description
-bun run dev:cli	Start the CLI in watch mode
-bun run dev:server	Start the Hono server with hot reload
-bun run build:cli	Build the CLI package
-bun run link:cli	Build and link the nightcode executable
-bun run --cwd packages/database db:generate	Generate the Prisma client
-Packages
-Package	Description
-@nightcode/cli	Terminal UI and client-side tool execution
-@nightcode/server	Hono API, AI streaming, auth checks, and billing ingestion
-@nightcode/database	Prisma client and database schema
-@nightcode/shared	Shared Zod schemas, AI tool contracts, and model definitions
+Feito por [@renatomf](https://github.com/renatomf).
